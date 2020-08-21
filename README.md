@@ -1,4 +1,4 @@
-# Freeroam-World - Under Development 
+# Freeroam World - Under Development 
 Freeoam World by Oblivion 
 
 # Includes
@@ -28,7 +28,7 @@ Freeoam World by Oblivion
    
    
 # Note
-    The development was stopped few days ago. I started this gamemode dueing the COVID-19 pandemic and stopped it at 21st Aug 2020. If you want to continue it, then you can. I won't be developing it anymore. Thanks you.
+    The development was stopped few days ago. I started this gamemode during the COVID-19 pandemic and stopped it at 21st Aug 2020. If you want to continue it, then you can. I won't be developing it anymore. Thanks you.
 
 
 
