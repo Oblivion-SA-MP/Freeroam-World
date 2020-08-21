@@ -11,8 +11,8 @@ Freeoam World by Oblivion
    
 # Features 
   
-  SHA256 Hashing with Salts.
-  Saving Kills and Deaths
+  SHA256 Hashing with Salts.\n
+  Saving Kills and Deaths\n
   Saving Register and Last Online
   Saving Score and Cash.
   Saving Custom Player Color.
