@@ -3,28 +3,28 @@ Freeoam World by Oblivion
 
 # Includes
 
-   MySQL r41-4 
-   Foreach
-   Sscanf2 -  2.8.2 
-   ZCMD
-   Streamer - v2.9.4
+   MySQL r41-4 <br/>
+   Foreach<br/>
+   Sscanf2 -  2.8.2 <br/>
+   ZCMD<br/>
+   Streamer - v2.9.4<br/>
    
 # Features 
   
-  SHA256 Hashing with Salts.\n
-  Saving Kills and Deaths\n
-  Saving Register and Last Online
-  Saving Score and Cash.
-  Saving Custom Player Color.
-  Saving Player Skin.
-  Random Player Spawn( Hotspots )
-  Ban System.
+  SHA256 Hashing with Salts.<br/>
+  Saving Kills and Deaths<br/>
+  Saving Register and Last Online<br/>
+  Saving Score and Cash.<br/>
+  Saving Custom Player Color.<br/>
+  Saving Player Skin.<br/>
+  Random Player Spawn( Hotspots )<br/>
+  Ban System.<br/>
   
 
 # Featured Needed 
-   Admin System
-   Ban Command
-   List of Commands dialog.
+   Admin System<br/>
+   Ban Command<br/>
+   List of Commands dialog.<br/>
    
    
 # Note
