@@ -18,12 +18,10 @@ Freeoam World by Oblivion
   Saving Custom Player Color.<br/>
   Saving Player Skin.<br/>
   Random Player Spawn( Hotspots )<br/>
-  Ban System.<br/>
-  
+  Ban System with Temp Ban .<br/>
 
 # Featured Needed 
    Admin System<br/>
-   Ban Command<br/>
    List of Commands dialog.<br/>
    
    
