@@ -57,7 +57,8 @@ CREATE TABLE `users` (
   `cash` int(11) NOT NULL DEFAULT 0,
   `kills` int(11) NOT NULL DEFAULT 0,
   `deaths` int(11) NOT NULL DEFAULT 0,
-  `admin` int(11) NOT NULL DEFAULT 0
+  `admin` int(11) NOT NULL DEFAULT 0,
+  `online` tinyint(2) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
