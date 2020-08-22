@@ -338,7 +338,7 @@ publicEx OnPlayerAccountCheck(playerid)
         cache_get_value_name(0, "salts", PlayerInfo[playerid][Player_Salts], 11);
 
         // Ban Check
-        mysql_format(fwdb, MainStr, sizeof(MainStr), "SELECT `ban_id`,`ban_user`, `ban_admin`, `ban_time`,`ban_lift` ,`ban_reason` FROM `bans` WHERE `ban_user`='%e' LIMIT 1;", PlayerInfo[playerid][Player_Name]);
+        mysql_format(fwdb, MainStr, sizeof(MainStr), "SELECT `ban_id`,`ban_user`, `ban_admin`, `ban_time`,`ban_lift` ,`ban_reason` FROM `bans` WHERE `ban_user`='%e' OR `ban_ip` = '%s'", PlayerInfo[playerid][Player_Name], PlayerInfo[playerid][Player_IP]);
     	new Cache:bancheck = mysql_query(fwdb, MainStr);
 
     	new banrows = cache_num_rows();
