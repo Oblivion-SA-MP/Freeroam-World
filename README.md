@@ -21,7 +21,7 @@ Freeoam World by Oblivion
   Ban System with Temp Ban .<br/>
   Admin System
 
-# Featured Needed 
+# Features Needed 
    Admin Commands<br/>
    List of Commands dialog.<br/>
    
