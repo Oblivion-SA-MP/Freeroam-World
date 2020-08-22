@@ -1,4 +1,4 @@
-/*=====================================================================
+/* =====================================================================
                         Freeroam World @ 2020
                         Scripted By: Oblivion
                         Script Version :  v1
@@ -103,6 +103,7 @@ enum pinfo
      Player_Kills,
      Player_Deaths,
      Player_Admin,
+     Player_Mode,
 
      // bool
      bool:Player_Logged,
@@ -110,6 +111,11 @@ enum pinfo
      bool:Player_Spawned
 };
 new PlayerInfo[MAX_PLAYERS][pinfo];
+
+enum {
+
+	MODE_FREEROAM,
+}
 // Player Information Ends
 
 // Dialogs
@@ -456,6 +462,7 @@ public OnPlayerSpawn(playerid)
     PlayerInfo[playerid][Player_Spawned] = true;
     if(PlayerInfo[playerid][Player_FirstSpawn])
     {
+    	PlayerInfo[playerid][Player_Mode] = MODE_FREEROAM;
         PlayerInfo[playerid][Player_FirstSpawn] = false;
         SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
         SetPlayerInterior(playerid, 0);
@@ -463,18 +470,23 @@ public OnPlayerSpawn(playerid)
         StopAudioStreamForPlayer(playerid);
         SetPlayerWorldBounds(playerid, 20000, -20000, 20000, -20000);
         return 1;
-
     }
-	SetCameraBehindPlayer(playerid);
-	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
-    SetPlayerInterior(playerid, 0);
-    SetPlayerVirtualWorld(playerid, 0);
-    SetCameraBehindPlayer(playerid);
-    SetPlayerWorldBounds(playerid, 20000, -20000, 20000, -20000);
 
+    switch(PlayerInfo[playerid][Player_Mode])
+    {
+	       case MODE_FREEROAM:
+	       {
+		  		SetCameraBehindPlayer(playerid);
+				SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
+			    SetPlayerInterior(playerid, 0);
+			    SetPlayerVirtualWorld(playerid, 0);
+			    SetCameraBehindPlayer(playerid);
+			    SetPlayerWorldBounds(playerid, 20000, -20000, 20000, -20000);
+		   }
+	}
 	return 1;
 }
-CMD:kms(pid) return SetPlayerHealth(pid, 0.0);
+
 public OnPlayerDeath(playerid, killerid, reason)
 {
 	
@@ -483,20 +495,33 @@ public OnPlayerDeath(playerid, killerid, reason)
 
     PlayerInfo[playerid][Player_Spawned] = false;
     
+    SendDeathMessage(killerid, playerid, reason);
 
     SendPlayerMoney(playerid, -500);
     PlayerInfo[playerid][Player_Deaths]++;
 
     if(killerid != INVALID_PLAYER_ID)
     {
-    	PlayerInfo[playerid][Player_Kills]++;
-    	SendPlayerScore(playerid, 2);
-    	SendPlayerMoney(playerid, 5000);
+    	PlayerInfo[killerid][Player_Kills]++;
     }
 
-    new spawnrand = random(sizeof(PlayerSpawns));
-    SetSpawnInfo(playerid, NO_TEAM, GetPlayerSkin(playerid), PlayerSpawns[spawnrand][0], PlayerSpawns[spawnrand][1], PlayerSpawns[spawnrand][2], PlayerSpawns[spawnrand][3], 0, 0, 0, 0, 0, 0);
-    SendDeathMessage(killerid, playerid, reason);
+    switch(PlayerInfo[playerid][Player_Mode])
+    {
+      case MODE_FREEROAM: 
+      {
+	   	    new spawnrand = random(sizeof(PlayerSpawns));
+		    SetSpawnInfo(playerid, NO_TEAM, GetPlayerSkin(playerid), PlayerSpawns[spawnrand][0], PlayerSpawns[spawnrand][1], PlayerSpawns[spawnrand][2], PlayerSpawns[spawnrand][3], 0, 0, 0, 0, 0, 0);
+		   
+
+		    if(killerid != INVALID_PLAYER_ID && PlayerInfo[killerid][Player_Mode] == MODE_FREEROAM)
+		    {
+		    	SendPlayerScore(killerid, 2);
+		    	SendPlayerMoney(killerid, 5000);
+		    	return 1;
+		    }
+	  }
+
+	}
 	return 1;
 }
 
