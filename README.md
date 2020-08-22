@@ -19,6 +19,7 @@ Freeoam World by Oblivion
   Saving Player Skin.<br/>
   Random Player Spawn( Hotspots )<br/>
   Ban System with Temp Ban .<br/>
+  Admin System
 
 # Featured Needed 
    Admin Commands<br/>
