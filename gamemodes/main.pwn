@@ -1,4 +1,4 @@
-/* =====================================================================
+/*=====================================================================
                         Freeroam World @ 2020
                         Scripted By: Oblivion
                         Script Version :  v1
@@ -19,10 +19,10 @@ Compiler Note: -d3
 */
 
 #include <a_samp>
-#include <a_mysql41>                        
+#include <a_mysql41>
 #include <sscanf2>
 #include <foreach>
-#include <streamer>                    
+#include <streamer>
 #include <zcmd>  
 
 // Server Defines
@@ -616,7 +616,7 @@ publicEx PlayerRequestRegister(playerid)
 	SCM(playerid, msg_white,""SERVER_TAG" "text_white"You are now registered, and have been logged in!");
 	
 	// update join time once.
-	mysql_format(fwdb, MainStr, sizeof(MainStr), "UPDATE `users` SET `joined` = %d, `lastonline` = %d WHERE `ID` = %d LIMIT 1;",PlayerInfo[playerid][Player_Joined],PlayerInfo[playerid][Player_LastOnline],PlayerInfo[playerid][Player_ID] );
+	mysql_format(fwdb, MainStr, sizeof(MainStr), "UPDATE `users` SET `joined` = %d, `lastonline` = %d , `online` = 1 WHERE `ID` = %d LIMIT 1;",PlayerInfo[playerid][Player_Joined],PlayerInfo[playerid][Player_LastOnline],PlayerInfo[playerid][Player_ID] );
 	mysql_tquery(fwdb, MainStr);
 	return 1;
 }
@@ -660,6 +660,9 @@ publicEx PlayerRequestLogin(playerid)
        	{
        		SCM(playerid, -1, ""SERVER_TAG" "text_blue"Saved Skin is set!\n");
        	}
+
+        mysql_format(fwdb, MainStr, sizeof(MainStr), "UPDATE `users` SET `online` = 1 WHERE `ID` = %d LIMIT 1;",PlayerInfo[playerid][Player_ID] );
+	    mysql_tquery(fwdb, MainStr);
 
         SCM(playerid, -1, ""SERVER_TAG" "text_green"Successfully logged in.");
     }
@@ -987,7 +990,7 @@ stock RequestLoginDialog(playerid)
 
 stock PlayerRequestSaveStats(playerid)
 {
-	mysql_format(fwdb, MainStr, sizeof(MainStr), "UPDATE `users` SET `color` = %d, `lastonline` = %d, `playtime`= %d,`skin`=%d,`kills`=%d,`deaths`=%d,`cash`=%d WHERE `ID` = %d LIMIT 1;",
+	mysql_format(fwdb, MainStr, sizeof(MainStr), "UPDATE `users` SET `color` = %d, `lastonline` = %d, `playtime`= %d,`skin`=%d,`kills`=%d,`deaths`=%d,`cash`=%d, `online` = 0 WHERE `ID` = %d LIMIT 1;",
 	PlayerInfo[playerid][Player_Color],gettime(),CalculatePlayTime(playerid),PlayerInfo[playerid][Player_Skin],PlayerInfo[playerid][Player_Kills],PlayerInfo[playerid][Player_Deaths],
 	PlayerInfo[playerid][Player_Cash],PlayerInfo[playerid][Player_ID]);
 	mysql_tquery(fwdb, MainStr);
