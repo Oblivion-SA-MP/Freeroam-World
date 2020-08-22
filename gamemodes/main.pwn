@@ -64,6 +64,13 @@ new MySQL:fwdb;
 #define SCM                        SendClientMessage        
 #define SCMToAll                   SendClientMessageToAll   
 #define DIALOG_TAG                 ""text_white"["text_yellow"FW"text_white"] ::" 
+#define ADMIN_LEVELS               (5)
+#define None_LEVEL                 (0)
+#define Junior_LEVEL               (1)
+#define Lead_LEVEL                 (2)   
+#define Head_LEVEL                 (3)
+#define CEA_LEVEL                  (4)
+#define Founder_LEVEL              (5)
 // Animinations
 #define PreloadAnimLib(%1,%2)	   ApplyAnimation(%1,%2,"NULL",0.0,0,0,0,0,0)
 
@@ -113,17 +120,17 @@ enum
     DIALOG_LOGIN
 };
 
-/* Under Development.
-static const AdminLevels[][] =
+
+static const AdminLevels[ADMIN_LEVELS + 1 ][] =
 {
-	{"None"},
+	{"Member"},
 	{"Junior Administrator"},
-	{"Senior Administrator"},
-	{"General Administrator"},
+	{"Lead Administrator"},
 	{"Head Administrator"},
+	{"Chief Executive Administrator"},
 	{"Founder"}
 };
-*/
+
 static const PlayerColors[511] =
 {
 	0x000022FF, 0x000044FF, 0x000066FF, 0x000088FF, 0x0000AAFF, 0x0000CCFF, 0x0000EEFF,
@@ -642,7 +649,7 @@ publicEx PlayerRequestLogin(playerid)
 
         format(MainStr, sizeof(MainStr),""SERVER_TAG" Your playtime is %s\n", FormatPlayTime(playerid));
         SCM(playerid, msg_white, MainStr);
-
+        
        	if(PlayerInfo[playerid][Player_Color] != 0)
        	{
        		SetPlayerColor(playerid, PlayerInfo[playerid][Player_Color]);
@@ -780,7 +787,7 @@ CMD:stats(playerid, params[])
 CMD:tban(playerid, params[]) return cmd_tempban(playerid, params);
 CMD:tempban(playerid, params[])
 {
-   if(PlayerInfo[playerid][Player_Admin] < 1) return SCM(playerid, msg_red, "ERROR: You are not admin!");
+   if(PlayerInfo[playerid][Player_Admin] < Lead_LEVEL) return SCM(playerid, msg_red, "ERROR: You are not a higher level administrator!");
 
    new getotherid, ban_reason[40], ban_days, ban_lift;
    if(sscanf(params, "uds[40]", getotherid, ban_days, ban_reason))
@@ -823,7 +830,7 @@ publicEx OnPlayerTempBan(admin,ban_player,reason[],days)
 
 CMD:ban(playerid, params[])
 {
-   if(PlayerInfo[playerid][Player_Admin] < 1) return SCM(playerid, msg_red, "ERROR: You are not admin!");
+   if(PlayerInfo[playerid][Player_Admin] < Lead_LEVEL) return SCM(playerid, msg_red, "ERROR: You are not a higher level administrator!");
 
    new getotherid, ban_reason[40];
    if(sscanf(params, "us[40]", getotherid, ban_reason))
@@ -860,6 +867,48 @@ publicEx OnPlayerGetBanned(admin,ban_player,reason[])
 
 	 DelayKick(ban_player);
      return 1;
+}
+
+
+CMD:setlevel(playerid, params[]) return cmd_setadmin(playerid, params);
+CMD:setadmin(playerid, params[])
+{
+
+    if(PlayerInfo[playerid][Player_Admin] < CEA_LEVEL)
+		if(!IsPlayerAdmin(playerid))
+			 return SCM(playerid, msg_red, "ERROR: You are not a higher level administrator!");
+    
+    new getotherid, getalevel;
+    if(sscanf(params, "ui", getotherid, getalevel)) return SCM(playerid, msg_yellow, "Usage: /setadmin <id/name> <level>");
+
+    if(getotherid == INVALID_PLAYER_ID) return SCM(playerid, msg_red, "ERROR: Invalid player!");
+    if(!PlayerInfo[getotherid][Player_Logged]) return SCM(playerid, msg_red, "ERROR: Player not connected!");
+
+    if(getalevel < None_LEVEL || getalevel > Founder_LEVEL) return SCM(playerid, msg_red, "ERROR: Level Range ( 0 - 5 )");
+
+    if(PlayerInfo[playerid][Player_Admin] == CEA_LEVEL)
+	{
+		if(getalevel > CEA_LEVEL)
+			return SCM(playerid, msg_red, "ERROR: You can't promote yourself or other players to founder as an Chief Executive Administrator");
+	}
+
+	if(PlayerInfo[getotherid][Player_Admin] == getalevel)
+	{
+		return SCM(playerid, msg_red, "ERROR: Player is already in that level.");
+	}
+
+	new getlevel[50];
+	getlevel = (getalevel > PlayerInfo[getotherid][Player_Admin]) ? ("promoted") : ("demoted");
+
+    PlayerInfo[getotherid][Player_Admin] = getalevel;
+
+    format(MainStr, sizeof(MainStr), "%s %s has %s %s's level to %s", AdminLevels[PlayerInfo[playerid][Player_Admin]], PlayerInfo[playerid][Player_Name],
+    	getlevel,  PlayerInfo[getotherid][Player_Name],  AdminLevels[ PlayerInfo[getotherid][Player_Admin] ] );
+    SCMToAll(msg_blue, MainStr);
+
+    mysql_format(fwdb, MainStr, sizeof(MainStr), "UPDATE `users` SET `admin` = %d WHERE `ID` = %d", PlayerInfo[playerid][Player_Admin], PlayerInfo[playerid][Player_ID]);
+    mysql_query(fwdb, MainStr);
+	return 1;
 }
 
 ResetPlayerVar(playerid)
