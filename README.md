@@ -25,7 +25,7 @@ Freeoam World by Oblivion
   Teleport Menu 
 
 # Images
-  https://imgur.com/a/YZn6R5s
+  https://imgur.com/a/rBII3hh
 
 # Features Needed 
    Admin Commands<br/>
