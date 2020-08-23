@@ -11,6 +11,8 @@ Freeoam World by Oblivion
    
 # Features 
   
+  Register and Login System
+  Account Saving
   SHA256 Hashing with Salts.<br/>
   Saving Kills and Deaths<br/>
   Saving Register and Last Online<br/>
@@ -19,7 +21,11 @@ Freeoam World by Oblivion
   Saving Player Skin.<br/>
   Random Player Spawn( Hotspots )<br/>
   Ban System with Temp Ban .<br/>
-  Admin System
+  Admin System (Needs Command)
+  Teleport Menu 
+
+# Images
+  https://imgur.com/a/YZn6R5s
 
 # Features Needed 
    Admin Commands<br/>
