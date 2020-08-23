@@ -7,6 +7,7 @@ Freeoam World by Oblivion
    Foreach<br/>
    Sscanf2 -  2.8.2 <br/>
    ZCMD<br/>
+   Preview Dialog Plugin<br/>
    Streamer - v2.9.4<br/>
    
 # Features 
@@ -21,11 +22,14 @@ Freeoam World by Oblivion
   Saving Player Skin.<br/>
   Random Player Spawn( Hotspots )<br/>
   Ban System with Temp Ban .<br/>
-  Admin System (Needs Command)
-  Teleport Menu 
+  Admin System (Needs Command)<br/>
+  Teleport Menu <br/>
+  Weapons Menu with Preview Dialog  <br/>
 
 # Images
-  https://imgur.com/a/rBII3hh
+
+ General: https://imgur.com/a/rBII3hh<br/>
+ Weapons: https://imgur.com/a/cFmXXO3<br/>
 
 # Features Needed 
    Admin Commands<br/>
