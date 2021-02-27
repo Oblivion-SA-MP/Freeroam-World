@@ -1,0 +1,1 @@
+{Tele_Cities, 'glen', 'glen', 1897.0003,-1172.1928,24.2482,FREEROAM_WORLD,true},
